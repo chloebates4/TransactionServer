@@ -37,14 +37,15 @@ To bring you up to speed quickly and at the same time allow you to learn about g
 
 #### On the client side:
 
-Transaction Client - initializes a Transaction Server Proxy and then, using the proxy, runs any number of transactions as specified above.
-Transaction Server Proxy - represents the server on the client side, implements and advertises the transactional API.
+*Transaction Client* - initializes a Transaction Server Proxy and then, using the proxy, runs any number of transactions as specified above.
+*Transaction Server Proxy* - represents the server on the client side, implements and advertises the transactional API.
+
 #### On the server side:
 
-Transaction Server - initializes server by reading properties, according to which all managers are created/initialized and then runs the (multi-threaded) server loop.
-Transaction Manager - as the name implies, has oversight of all transactions and spawns Transaction Manager Workers to handle incoming transactions.
-Account Manager - initializes accounts and implements read/write operations, which, most importantly, involves locking, if locking is active.
-Lock Manager - handles all locks and lock/unlock requests. Convince yourself that, in order to implement strict two-phase locking, this manager receives lock requests from the Account Manager, while it receives unlock requests from the Transaction Manager (Worker), when a transaction closes.
+*Transaction Server* - initializes server by reading properties, according to which all managers are created/initialized and then runs the (multi-threaded) server loop.
+*Transaction Manager* - as the name implies, has oversight of all transactions and spawns Transaction Manager Workers to handle incoming transactions.
+*Account Manager* - initializes accounts and implements read/write operations, which, most importantly, involves locking, if locking is active.
+*Lock Manager* - handles all locks and lock/unlock requests. Convince yourself that, in order to implement strict two-phase locking, this manager receives lock requests from the Account Manager, while it receives unlock requests from the Transaction Manager (Worker), when a transaction closes.
 
 
 ## What to submit
