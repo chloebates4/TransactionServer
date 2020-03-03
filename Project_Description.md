@@ -35,11 +35,11 @@ For a project of this complexity, your code needs to be well-structured. This co
 
 To bring you up to speed quickly and at the same time allow you to learn about good design, I suggest to implement the following parts:
 
-##### On the client side:
+#### On the client side:
 
 Transaction Client - initializes a Transaction Server Proxy and then, using the proxy, runs any number of transactions as specified above.
 Transaction Server Proxy - represents the server on the client side, implements and advertises the transactional API.
-##### On the server side:
+#### On the server side:
 
 Transaction Server - initializes server by reading properties, according to which all managers are created/initialized and then runs the (multi-threaded) server loop.
 Transaction Manager - as the name implies, has oversight of all transactions and spawns Transaction Manager Workers to handle incoming transactions.
