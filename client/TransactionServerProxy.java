@@ -58,6 +58,7 @@ public class TransactionServerProxy implements MessageTypes
 
   }
 
+  // This function is designed to handle write requests
   public int write( int accountNumber, int amount )
   {
     //Make a Ibject with accountNumber & amount here
