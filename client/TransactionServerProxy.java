@@ -37,7 +37,7 @@ public class TransactionServerProxy implements MessageTypes
   public int read(int accountNumber)
   {
 
-    Message readMessage = new Message(READ_REQUEST, accountNumber);
+    Message readMessage = new Message(READ, accountNumber);
     Integer returnBalance = null;
 
     try
@@ -60,8 +60,26 @@ public class TransactionServerProxy implements MessageTypes
 
   public int write( int accountNumber, int amount )
   {
-    //Shuld be ~16 lines
-    return 0;
+    //Make a Ibject with accountNumber & amount here
+    new Object messageObject(accountNumber, amount);
+    Message writeMessage = new Message (WRITE, messageObject);
+    // Var name is changed here to reflect that the blance after the write
+    // is stored and returned
+    Integer newReturnBalance = null;
+
+    try
+    {
+      writeToNet.writeObject(writeMessage);
+      Integer newReturnBalance = (Integer) readFromNet.readObject();
+    }
+    catch(Exception ex)
+    {
+
+      System.out.println("[TransactionServerProxy.write] Error Occurred");
+      ex.printStackTrace();
+    }
+
+    return newReturnBalance;
   }
 
 }
