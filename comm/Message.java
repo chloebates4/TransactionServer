@@ -4,26 +4,26 @@ package comm;
 public class Message implements MessageTypes {
 
     // type of message
-    int messageType; 
+    int messageType;
 
     // content to the message
-    Object messageContent; 
+    Object messageContent;
 
     /*
         Constructor that takes in both message type and its content
     */
     public Message (int msgType, Object content) {
-        messageType = msgType; 
-        content = content; 
+        messageType = msgType;
+        messageContent = content;
     }
 
     /*
         Constructor that takes in only message type
     */
     public Message (int givenType) {
-        this(type, null); 
+        this(type, null);
     }
-    
+
     /*
         Setter for messageType
     */
@@ -35,20 +35,20 @@ public class Message implements MessageTypes {
         Getter for messageType
     */
     public int getType() {
-        return messageType; 
+        return messageType;
     }
 
     /*
         Setter for content
     */
-    public void setContent(int content) {
-        messageType = msgType;
+    public void setContent(Object content) {
+        messageContent = content;
     }
 
     /*
         Getter for content
     */
-    public int getType() {
-        return content; 
+    public int getContent() {
+        return messageContent;
     }
 }
