@@ -24,24 +24,43 @@ public class TransactionServerProxy implements MessageTypes
 
   public int openTransaction()
   {
-    // 18 lines
+    // Should be ~18 lines
     return 0;
   }
 
   public void closeTransaction()
   {
-    // 14 lines
+    // Should be ~14 lines
   }
 
+  // This Method handles requested read operations
   public int read(int accountNumber)
   {
-    // 15 lines
-    return 0;
+
+    Message readMessage = new Message(READ_REQUEST, accountNumber);
+    Integer returnBalance = null;
+
+    try
+    {
+
+       writeToNet.writeObject(readMessage);
+       returnBalance = (Integer) readFromNet.readObject();
+
+    }
+    catch(Exception ex)
+    {
+
+      System.out.println("[TransactionServerProxy.read] Error Occurred");
+      ex.printStackTrace();
+    }
+
+    return returnBalance;
+
   }
 
   public int write( int accountNumber, int amount )
   {
-    //16 lines
+    //Shuld be ~16 lines
     return 0;
   }
 
