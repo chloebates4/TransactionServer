@@ -2,14 +2,23 @@ package server.account;
 
 import java.util.ArrayList;
 // Import packages
+import server.lock.LockTypes; 
+import server.account.Account; 
+import server.transaction.Transaction; 
 
+/**
+ * Account Manager - initializes accounts and implements 
+ * read/write operations, which, most importantly, involves 
+ * locking, if locking is active.
+ * 
+ */
 public class AccountManager implements LockTypes
 {
   private static ArrayList<Account> accounts;
   private static int numberAccounts;
   private static int initialBalance;
 
-  public class AccountManager(int numberAccounts, int initialBalance)
+  public AccountManager(int numberAccounts, int initialBalance)
   {
     accounts = new ArrayList();
     AccountManager.numberAccounts = numberAccounts;
@@ -17,7 +26,7 @@ public class AccountManager implements LockTypes
 
     for(int i = 0; i < numberAccounts; i++)
     {
-      accounts.add(i, new Account(i, initialBalance));
+      accounts.add(new Account(i));
     }
   }
 
@@ -35,18 +44,16 @@ public class AccountManager implements LockTypes
   {
     Account account = getAccount(accountNumber);
 
-    (TransactionServer.lockManager).lock(account, transaction, WRITE_LOCK);
 
-    return (getAccount(accountNumber)).getBalance();
+    return (getAccount(accountNumber)).getNumber();
   }
 
   public int write(int accountNumber, Transaction transaction, int balance)
   {
     Account account = getAccount(accountNumber);
 
-    (TransactionServer.lockManager).lock(account, transaction, WRITE_LOCK);
 
-    account.setBalance(balance);
+    account.setNumber(balance);
     return balance;
   }
 }

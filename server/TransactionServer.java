@@ -6,11 +6,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.concurrent.Executors;
+// get transaction imports
+import server.account.AccountManager; 
+import server.transaction.TransactionManager; 
+import server.lock.LockManager;
+import utils.PropertyHandler; 
+import utils.FileUtils; 
 
+/**
+ * Transaction Server - initializes server by reading properties, 
+ * according to which all managers are created/initialized and 
+ * then runs the (multi-threaded) server loop.
+ * 
+*/
 public class TransactionServer
 {
 
-  public static boolean transactionView;
+  public static boolean flag;
   public static AccountManager accountManager = null;
   public static TransactionManager transactionManager = null;
   public static LockManager lockManager = null;
@@ -19,53 +31,52 @@ public class TransactionServer
 
   public TransactionServer(String serverPropertiesFile)
   {
-    Propertiers serverProperties = null;
+    Properties serverProperties = null;
 
     try
     {
       serverProperties = new PropertyHandler(serverPropertiesFile);
     } catch (Exception e)
     {
-      System.out.println("(TransactionServer.TransactionServer) Did not find properties file \"" + serverPropertiesFile + "\"");
+      System.out.println("no propertes file \"" + serverPropertiesFile + "\"");
       e.printStackTrace();
       System.exit(1);
     }
 
     // transaction manager creation
-    transactionView = Boolean.valueOf(serverProperties.getProperty("TRANSACTION_VIEW"));
     TransactionServer.transactionManager = new TransactionManager();
-    System.out.println("(TransactionServer.TransactionServer) TransactionManager created");
+    System.out.println("CREATED TransactionManager @TransactionServer.TransactionServer");
 
     // lock manager creation
     boolean applyLocking = Boolean.valueOf(serverProperties.getProperty("APPLY_LOCKING"));
     TransactionServer.lockManager = new LockManager(applyLocking);
-    System.out.println("(TransactionServer.TransactionServer) LockManager created");
+    System.out.println("CREATED LockManager @TransactionServer.TransactionServer");
 
     // account manager creation
-    int numberAccounts = 0;
-    numberAccounts = Integer.parseInt(serverProperties.getProperty("NUMBER_ACCOUNTS"));
-    int initialBalance = 0;
-    initialBalance = Integer.parseInt(serverProperties.getProperty("INITIAL_BALANCE"));
+    int numAccounts = 0;
+    numAccounts = Integer.parseInt(serverProperties.getProperty("NUMBER_ACCOUNTS"));
+    
+    int initBalance = 0;
+    initBalance = Integer.parseInt(serverProperties.getProperty("INITIAL_BALANCE"));
 
-    TransactionServer.accoutnManager = new AccountManager(numberAccounts, initialBalance);
-    System.out.println("(TransactionServer.TransactionServer) AccountManager created");
+    TransactionServer.accountManager = new AccountManager(numAccounts, initBalance);
+    System.out.println("CREATED AccountManager @TransactionServer.TransactionServer");
 
 
     // server socket  creation
     try
     {
       serverSocket = new ServerSocket(Integer.parseInt(serverProperties.getProperty("PORT")));
-      System.out.println("(TransactionServer.TransactionServer) ServerSocket created");
+      System.out.println("CREATED ServerSocket @TransactionServer.TransactionServer");
       System.exit(1);
-    } catch (IOException ex)
+    } catch (Exception ex)
     {
-      System.out.println("(TransactionServer.TransactionServer) could not create server socket");
+      System.out.println("caught exception");
       ex.printStackTrace();
       System.exit(1);
     }
   }
 
-  @Override
   public void run()
   {
     // run server loop
@@ -76,8 +87,9 @@ public class TransactionServer
         transactionManager.runTransaction(serverSocket.accept());
       } catch (IOException ex)
       {
-        System.out.println("(TransactionServer.run) Warning: Error accepting the client");
+        System.out.println("caught IOException");
         ex.printStackTrace();
       }
     }
   }
+}

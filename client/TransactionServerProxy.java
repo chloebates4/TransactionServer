@@ -1,4 +1,4 @@
-package transaction.client;
+package client;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -6,6 +6,16 @@ import java.io.ObjectOutputStream;
 import comm.Message;
 import comm.MessageTypes;
 
+/**
+ * represents the server on the client side, implements and 
+ * advertises the four operations of the transactional API, 
+ * i.e. read/write and openTransaction/closeTransaction. 
+ * It's life span is exactly the life span of one transaction, 
+ * which in our case is doing two pairs of read/write operations 
+ * on a randomly chosen pair of accounts, transferring a 
+ * random dollar amount.
+ * 
+*/
 public class TransactionServerProxy implements MessageTypes
 {
   String host = null;
@@ -22,24 +32,30 @@ public class TransactionServerProxy implements MessageTypes
     this.port = hostPort;
   }
 
+  public void abortTransmission()
+  {
+      
+  }
   // This method handles opening a transaction with the server
   public int openTransaction()
   {
-    // Should be ~20 lines
+      //Starts a new transaction and delivers a unique TID trans. 
+      // This identifier will be used in the other operations in the transaction.
     return 0;
   }
 
   // This method handles closing a transaction with the server
   public void closeTransaction()
   {
-    // Should be ~18 lines
+      // Ends a transaction: a commit return value indicates that the 
+      // transaction has committed; an abort return value indicates that it has aborted
   }
 
   // This Method handles requested read operations
-  public int read(int accountNumber)
+  public int read(int acctNum)
   {
 
-    Message readMessage = new Message(READ, accountNumber);
+    Message readMessage = new Message(READ, acctNum);
     Integer returnBalance = null;
 
     try
@@ -52,7 +68,7 @@ public class TransactionServerProxy implements MessageTypes
     catch(Exception ex)
     {
 
-      System.out.println("[TransactionServerProxy.read] Error Occurred");
+      System.out.println("Error ");
       ex.printStackTrace();
     }
 
@@ -64,7 +80,7 @@ public class TransactionServerProxy implements MessageTypes
   public int write( int accountNumber, int amount )
   {
     // Make a Object with accountNumber & amount here
-    new Object messageObject(accountNumber, amount);
+    Object messageObject = new Object(accountNumber, amount);
     Message writeMessage = new Message (WRITE, messageObject);
     // Var name is changed here to reflect that the blance after the write
     // is stored and returned
@@ -78,7 +94,7 @@ public class TransactionServerProxy implements MessageTypes
     catch(Exception ex)
     {
 
-      System.out.println("[TransactionServerProxy.write] Error Occurred");
+      System.out.println("Error");
       ex.printStackTrace();
     }
 

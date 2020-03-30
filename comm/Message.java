@@ -1,27 +1,26 @@
 package comm;
 
-// ¿serializable?
 public class Message implements MessageTypes {
 
     // type of message
     int messageType;
 
     // content to the message
-    Object messageContent;
+    Object message;
 
     /*
         Constructor that takes in both message type and its content
     */
     public Message (int msgType, Object content) {
         messageType = msgType;
-        messageContent = content;
+        message = content;
     }
 
     /*
         Constructor that takes in only message type
     */
     public Message (int givenType) {
-        this(type, null);
+        this(givenType, null);
     }
 
     /*
@@ -42,13 +41,13 @@ public class Message implements MessageTypes {
         Setter for content
     */
     public void setContent(Object content) {
-        messageContent = content;
+        message = content;
     }
 
     /*
         Getter for content
     */
-    public int getContent() {
-        return messageContent;
+    public Object getContent() {
+        return message;
     }
 }

@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList; 
 import java.util.Scanner;
 import java.util.concurrent.Executors;
 // packages
@@ -13,13 +14,18 @@ import comm.Message;
 import comm.MessageTypes;
 import server.TransactionServer; 
 
+/**
+ * Transaction Manager - as the name implies, has 
+ * oversight of all transactions and spawns Transaction 
+ * Manager Workers to handle incoming transactions.
+ */
 public class TransactionManager implements MessageTypes {
 
-    private static int countOfTransactions = 0; 
     private static final ArrayList<Transaction> transactions = new ArrayList<>(); 
 
-    public TransactionManager() {
-
+    public TransactionManager() 
+    {
+        //nothing
     }
 
     public ArrayList<Transaction> getTransaction() {
@@ -32,18 +38,14 @@ public class TransactionManager implements MessageTypes {
 
     public class TransactionManagerWorker extends Thread {
 
-        boolean flag = true; // flags if transaction is closed
-        Transaction transaction = null; 
         Socket client = null; 
         ObjectInputStream read = null; 
         ObjectOutputStream write = null; 
-        Message message = null; 
-        int accountNum = 0; 
-        int accountBalance = 0; 
 
         private TransactionManagerWorker(Socket client) {
             client = client;
-
+            ObjectInputStream reading; 
+            ObjectOutputStream writing; 
             try {
                 reading = new ObjectInputStream(client.getInputStream()); 
                 writing = new ObjectOutputStream(client.getOutputStream()); 
@@ -56,7 +58,7 @@ public class TransactionManager implements MessageTypes {
 
         @Override
         public void run() {
-            
+            //todo
         }
 
 

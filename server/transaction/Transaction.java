@@ -2,9 +2,12 @@ package server.transaction;
 
 import java.util.ArrayList;
 // Import Packages
+import server.lock.Lock; 
+
+
 public class Transaction {
 
-  int transID;
+  public int transID;
   ArrayList<Lock> locks = null;
 
   StringBuffer log = new StringBuffer("");
@@ -18,7 +21,7 @@ public class Transaction {
     return transID;
   }
 
-  public ArrayList<lock> getLocks() {
+  public ArrayList<Lock> getLocks() {
     return locks;
   }
 
@@ -26,12 +29,10 @@ public class Transaction {
     locks.add(lock);
   }
 
-  public void log(String logString) {
-    log.append("\n").append(logString);
+  public void log(String str) {
 
-    if(TransactionServer.transactionView) {
-      System.out.println("Transaction # " + this.getID() + ((this.getID() < 10) ? " " : " ") + logString);
-    }
+    System.out.println("Transaction # " + this.getID() + "\n");
+
   }
 
   public StringBuffer getLog() {
