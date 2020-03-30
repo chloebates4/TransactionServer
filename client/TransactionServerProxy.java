@@ -2,7 +2,7 @@ package transaction.client;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
+// import java.net.Socket;
 import comm.Message;
 import comm.MessageTypes;
 
@@ -11,7 +11,7 @@ public class TransactionServerProxy implements MessageTypes
   String host = null;
   int port;
 
-  private Socket dbConnection = null;
+  // private Socket dbConnection = null;
   private ObjectOutputStream writeToNet = null;
   private ObjectInputStream readFromNet = null;
   private Integer transactionID = 0;
@@ -22,15 +22,17 @@ public class TransactionServerProxy implements MessageTypes
     this.port = hostPort;
   }
 
+  // This method handles opening a transaction with the server
   public int openTransaction()
   {
-    // Should be ~18 lines
+    // Should be ~20 lines
     return 0;
   }
 
+  // This method handles closing a transaction with the server
   public void closeTransaction()
   {
-    // Should be ~14 lines
+    // Should be ~18 lines
   }
 
   // This Method handles requested read operations
@@ -61,7 +63,7 @@ public class TransactionServerProxy implements MessageTypes
   // This function is designed to handle write requests
   public int write( int accountNumber, int amount )
   {
-    //Make a Ibject with accountNumber & amount here
+    // Make a Object with accountNumber & amount here
     new Object messageObject(accountNumber, amount);
     Message writeMessage = new Message (WRITE, messageObject);
     // Var name is changed here to reflect that the blance after the write
