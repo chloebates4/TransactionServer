@@ -4,27 +4,37 @@ package server.account;
 /**
  *
  */
-public class Account 
+public class Account
 {
-    private int accountNum; 
-    
+    private int accountNum;
+
     public Account()
     {
-        accountNum = 0; 
+        accountNum = 0;
     }
-    
+
     public Account(int num)
     {
-        accountNum = num; 
+        accountNum = num;
     }
-    
+
     public int getNumber()
     {
-        return accountNum; 
+        return accountNum;
     }
-    
+
     public void setNumber(int num)
     {
-         accountNum=num; 
+         accountNum=num;
+    }
+
+    public int getBalance()
+    {
+         return balance;
+    }
+
+    public void setBalance(int newBalance)
+    {
+         balance = newBalance;
     }
 }
